@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click Counter | Asfandyar Khan | CSC 337 Assignment 3</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/calculator.svg">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1><i class="fas fa-mouse-pointer"></i> JavaScript Button Click Counter</h1>
+            <p class="subtitle">CSC 337 - Web Programming Languages - Assignment 3</p>
+            <div class="student-info">
+                <p><strong>Name:</strong> Asfandyar Khan</p>
+                <p><strong>Student ID:</strong> 051-22-137243</p>
+                <p><strong>Task:</strong> Count and display number of button clicks using JavaScript</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Counter Display Section -->
+            <section class="counter-section">
+                <div class="counter-display" id="counterDisplay">
+                    <span class="counter-number" id="clickCount">0</span>
+                    <span class="counter-label">CLICKS</span>
+                </div>
+                
+                <div class="counter-message" id="counterMessage">
+                    Click the button below to start counting!
+                </div>
+            </section>
+
+            <!-- Click Button Section -->
+            <section class="button-section">
+                <button class="click-button" id="clickButton">
+                    <i class="fas fa-hand-pointer"></i> CLICK ME
+                </button>
+                
+                <div class="button-hint">
+                    <i class="fas fa-lightbulb"></i> Click as many times as you want!
+                </div>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="controls-section">
+                <h2><i class="fas fa-sliders-h"></i> Controls</h2>
+                
+                <div class="control-buttons">
+                    <button class="control-btn" id="resetButton">
+                        <i class="fas fa-redo"></i> Reset Counter
+                    </button>
+                    
+                    <button class="control-btn" id="incrementButton">
+                        <i class="fas fa-plus-circle"></i> Add 10 Clicks
+                    </button>
+                    
+                    <button class="control-btn" id="decrementButton">
+                        <i class="fas fa-minus-circle"></i> Subtract 5 Clicks
+                    </button>
+                </div>
+                
+                <div class="auto-click-section">
+                    <h3><i class="fas fa-robot"></i> Auto Clicker</h3>
+                    <div class="auto-controls">
+                        <button class="control-btn" id="autoClickButton">
+                            <i class="fas fa-play"></i> Start Auto Click (1/second)
+                        </button>
+                        <button class="control-btn" id="stopAutoButton" disabled>
+                            <i class="fas fa-stop"></i> Stop Auto Click
+                        </button>
+                    </div>
+                    <p class="note">Auto-clicker will add 1 click every second</p>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="stats-section">
+                <h2><i class="fas fa-chart-bar"></i> Click Statistics</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-value" id="clicksPerSecond">0.0</div>
+                        <div class="stat-label">Clicks/Second</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="stat-value" id="lastClickTime">--:--:--</div>
+                        <div class="stat-label">Last Click Time</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-value" id="highestCount">0</div>
+                        <div class="stat-label">Highest Count</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-value" id="sessionTime">0:00</div>
+                        <div class="stat-label">Session Time</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="history-section">
+                <h2><i class="fas fa-history"></i> Click History</h2>
+                <div class="history-container">
+                    <div class="history-list" id="clickHistory">
+                        <!-- Click history items will be added here by JavaScript -->
+                        <div class="history-empty">
+                            <i class="fas fa-history"></i>
+                            <p>No clicks yet. Start clicking to see history!</p>
+                        </div>
+                    </div>
+                    <button class="control-btn" id="clearHistoryButton">
+                        <i class="fas fa-trash"></i> Clear History
+                    </button>
+                </div>
+            </section>
+
+            <!-- Code Explanation Section -->
+            <section class="explanation-section">
+                <h2><i class="fas fa-code"></i> JavaScript Implementation</h2>
+                
+                <div class="code-explanation">
+                    <h3>Core JavaScript Logic:</h3>
+                    <pre><code>// Initialize click counter
+let clickCount = 0;
+
+// Function to handle button click
+function handleClick() {
+    clickCount++;  // Increment counter
+    updateDisplay();  // Update UI
+    saveToHistory();  // Record click
+    updateStatistics();  // Update stats
+}
+
+// Function to update display
+function updateDisplay() {
+    document.getElementById('clickCount').textContent = clickCount;
+    
+    // Update message based on count
+    if (clickCount === 1) {
+        message = "First click! Keep going!";
+    } else if (clickCount === 10) {
+        message = "10 clicks! You're getting good!";
+    } else if (clickCount === 50) {
+        message = "50 clicks! Impressive!";
+    } else if (clickCount === 100) {
+        message = "100 clicks! You're a clicking master!";
+    }
+}</code></pre>
+                    
+                    <h3>Key JavaScript Concepts Used:</h3>
+                    <ul class="concepts-list">
+                        <li><strong>Variables:</strong> Storing click count</li>
+                        <li><strong>Functions:</strong> Modular code organization</li>
+                        <li><strong>DOM Manipulation:</strong> Updating HTML elements</li>
+                        <li><strong>Event Listeners:</strong> Handling button clicks</li>
+                        <li><strong>Local Storage:</strong> Saving data between sessions</li>
+                        <li><strong>setInterval:</strong> For auto-click functionality</li>
+                        <li><strong>Date Object:</strong> Tracking click timestamps</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>CSC 337 - Web Programming Languages | Assignment 3 | JavaScript Task</p>
+            <p>Student: Asfandyar Khan (051-22-137243) | Task: Button Click Counter</p>
+            <p>All JavaScript code is in external <code>script.js</code> file</p>
+            <div class="footer-links">
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub Repository</a>
+                <span class="separator">|</span>
+                <a href="#" id="viewSource"><i class="fas fa-code"></i> View JavaScript Source</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="script.js"></script>
+    
+    <!-- Additional script for inline functionality -->
+    <script>
+        // View source code button functionality
+        document.getElementById('viewSource').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('The complete JavaScript code is in the external "script.js" file. Check the GitHub repository for full source code.');
+        });
+    </script>
+</body>
+</html>
